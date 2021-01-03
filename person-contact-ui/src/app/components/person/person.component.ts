@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonService } from 'src/app/services/person.service';
 import { Person } from './person';
 
@@ -9,16 +10,29 @@ import { Person } from './person';
 })
 export class PersonComponent implements OnInit {
 
-  constructor(private personService: PersonService) { }
-  person: Person = new Person();
+  formData: FormGroup;
+  person: Person;
+  persons: Person[] = [];
+
+  constructor(
+    private personService: PersonService,
+    private formBuilder: FormBuilder) { }
+
+
 
   ngOnInit(): void {
+    this.formData = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
+    })
+  }
 
-    this.person.email = 'joãorosa@devmaster.com'
-    this.person.favorite = true;
-    this.person.name = 'João'
-    this.personService.save(this.person).subscribe(data => {
-      console.log(data);
+  onSubmit() {
+    const formValues = this.formData.value;
+    this.person = formValues;
+    this.personService.save(this.person).subscribe(response => {
+      this.persons.push(response);
+      console.log(this.persons);
     })
   }
 

@@ -3,17 +3,25 @@
 </mat-toolbar>
 
 <div class="width-80">
-  <form>
-    <mat-form-field >
+  <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+    <mat-form-field>
       <mat-label>Nome:</mat-label>
-      <input matInput placeholder="Digite seu Nome">
+      <input formControlName="name" matInput placeholder="Digite seu Nome">
     </mat-form-field>
+    
+    <div *ngIf="formData.controls.name.errors ">
+      Campo nome obrigatório
+    </div>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label>E-mail:</mat-label>
-      <input matInput placeholder="Digite seu E-mail">
+      <input formControlName="email" matInput placeholder="Digite seu E-mail">
     </mat-form-field>
 
-    <button mat-button color="primary">Adicionar</button>
+    <div *ngIf="formData.controls.email.errors ">
+      Campo email obrigatório
+    </div>
+
+    <button mat-button color="primary" [disabled]="formData.invalid">Adicionar</button>
   </form>
 </div>
