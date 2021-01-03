@@ -20,4 +20,12 @@ export class PersonService implements OnInit {
   save(person: Person): Observable<Person> {
     return this.http.post<Person>(this.url, person);
   }
+
+  getAllPersons(): Observable<Person[]> {
+    return this.http.get<Person[]>(this.url);
+  }
+
+  favorite(person: Person): Observable<any>{
+    return this.http.patch(`${this.url}/${person.id}/favorite`, null);
+  }
 }

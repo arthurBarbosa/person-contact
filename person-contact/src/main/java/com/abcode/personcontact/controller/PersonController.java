@@ -19,7 +19,7 @@ public class PersonController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Person save(@RequestBody Person person) {
-       return personRepository.save(person);
+        return personRepository.save(person);
     }
 
     @DeleteMapping
@@ -35,10 +35,12 @@ public class PersonController {
     }
 
     @PatchMapping("/{id}/favorite")
-    public void favorite(@PathVariable Long id, @RequestBody Boolean favorite) {
+    public void favorite(@PathVariable Long id) {
         var person = personRepository.findById(id);
         person.ifPresent(obj -> {
-            obj.setFavorite(favorite);
+            boolean favorite = obj.getFavorite() == Boolean.TRUE;
+            obj.setFavorite(!favorite);
+            personRepository.save(obj);
         });
     }
 }

@@ -14,6 +14,8 @@ export class PersonComponent implements OnInit {
   person: Person;
   persons: Person[] = [];
 
+  displayedColumns: string[] = ['id', 'name', 'email', 'favorite'];
+
   constructor(
     private personService: PersonService,
     private formBuilder: FormBuilder) { }
@@ -21,6 +23,12 @@ export class PersonComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.createForm();
+
+    this.getAllPersons();
+  }
+
+  createForm() {
     this.formData = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]]
@@ -35,5 +43,19 @@ export class PersonComponent implements OnInit {
       console.log(this.persons);
     })
   }
+
+  getAllPersons() {
+    this.personService.getAllPersons().subscribe(response => {
+      this.persons = response;
+    })
+  }
+
+  favorite(person: Person) {
+    this.personService.favorite(person).subscribe(response => {
+      person.favorite = !person.favorite;
+    })
+  }
+
+
 
 }
