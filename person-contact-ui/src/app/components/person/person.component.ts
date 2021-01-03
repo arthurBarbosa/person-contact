@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonService } from 'src/app/services/person.service';
@@ -39,8 +40,8 @@ export class PersonComponent implements OnInit {
     const formValues = this.formData.value;
     this.person = formValues;
     this.personService.save(this.person).subscribe(response => {
-      this.persons.push(response);
-      console.log(this.persons);
+      let list: Person[] = [...this.persons, response]
+      this.persons = list
     })
   }
 
