@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/persons")
 @RequiredArgsConstructor
@@ -17,8 +18,8 @@ public class PersonController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(Person person) {
-        personRepository.save(person);
+    public Person save(@RequestBody Person person) {
+       return personRepository.save(person);
     }
 
     @DeleteMapping
