@@ -24,4 +24,8 @@ public class Person {
     private String email;
     @Column
     private Boolean favorite;
+
+    @Column
+    @Lob
+    private byte[] image;
 }

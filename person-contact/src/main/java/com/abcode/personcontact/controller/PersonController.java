@@ -3,9 +3,13 @@ package com.abcode.personcontact.controller;
 import com.abcode.personcontact.entity.Person;
 import com.abcode.personcontact.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -42,5 +46,24 @@ public class PersonController {
             obj.setFavorite(!favorite);
             personRepository.save(obj);
         });
+    }
+
+    @PutMapping("{id}/image")
+    public byte[] addImage(@PathVariable Long id,
+                           @RequestParam("image") Part file) {
+        var person = personRepository.findById(id);
+        return person.map(personInDatabase -> {
+            try {
+                InputStream is = file.getInputStream();
+                byte[] bytes = new byte[(int) file.getSize()];
+                IOUtils.readFully(is, bytes);
+                personInDatabase.setImage(bytes);
+                personRepository.save(personInDatabase);
+                is.close();
+                return bytes;
+            } catch (IOException e) {
+                return null;
+            }
+        }).orElse(null);
     }
 }

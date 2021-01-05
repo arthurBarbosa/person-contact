@@ -28,4 +28,8 @@ export class PersonService implements OnInit {
   favorite(person: Person): Observable<any>{
     return this.http.patch(`${this.url}/${person.id}/favorite`, null);
   }
+
+  upload(person: Person, formData: FormData): Observable<any>{
+    return this.http.put(`${this.url}/${person.id}/image`, formData, {responseType: 'blob'});
+  }
 }

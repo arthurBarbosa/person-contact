@@ -15,7 +15,7 @@ export class PersonComponent implements OnInit {
   person: Person;
   persons: Person[] = [];
 
-  displayedColumns: string[] = ['id', 'name', 'email', 'favorite'];
+  displayedColumns: string[] = ['image', 'id', 'name', 'email', 'favorite'];
 
   constructor(
     private personService: PersonService,
@@ -57,6 +57,18 @@ export class PersonComponent implements OnInit {
     })
   }
 
+  uploadImage(event, person) {
+    const files = event.target.files;
+    if (files) {
+      const image = files[0];
+      const formData: FormData = new FormData();
+      formData.append('image', image);
+      this.personService
+        .upload(person, formData)
+        .subscribe(response => this.getAllPersons());
+    }
+
+  }
 
 
 }
