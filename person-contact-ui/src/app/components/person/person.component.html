@@ -17,7 +17,8 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let person">
           <div *ngIf="person.image">
-            <img src="data:image/jpg;base64,{{person.image}}" alt="" width="50" height="50">
+            <img src="data:image/jpg;base64,{{person.image}}" alt="" width="50" height="50"
+              (click)="viewDetailPerson(person)">
           </div>
           <div *ngIf="!person.image">
             <input type="file" name="image" (change)="uploadImage($event, person)" />
@@ -51,8 +52,15 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+      
     </table>
+    
+    <mat-paginator  class="width-80"
+    [length]="totalElements" 
+    [pageSize]="size"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="paginator($event)">
+    </mat-paginator>
   </mat-tab>
 
   <mat-tab label="Novo Cadastro">
@@ -69,8 +77,10 @@
             <input formControlName="name" matInput placeholder="Digite seu Nome">
           </mat-form-field>
 
-          <div *ngIf="formData.controls.name.errors ">
-            Campo nome obrigatório
+          <div *ngIf="formData.controls.name.errors  && !formData.controls.name.pristine">
+            <div *ngIf="formData.controls.name.errors.required">
+              Campo nome obrigatório
+            </div>
           </div>
 
           <mat-form-field>
@@ -78,8 +88,10 @@
             <input formControlName="email" matInput placeholder="Digite seu E-mail">
           </mat-form-field>
 
-          <div *ngIf="formData.controls.email.errors ">
-            Campo email obrigatório
+          <div *ngIf="formData.controls.email.errors && !formData.controls.email.pristine ">
+            <div *ngIf="formData.controls.email.errors.required">
+              Campo email obrigatório
+            </div>
           </div>
 
           <button mat-button color="primary" [disabled]="formData.invalid">Adicionar</button>

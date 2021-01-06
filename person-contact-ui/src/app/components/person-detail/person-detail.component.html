@@ -1,0 +1,25 @@
+<mat-card style="text-align: center;">
+  <mat-card-header>
+    <mat-card-title style=" display: block; text-align:left">
+      <mat-icon>face</mat-icon>
+      Pessoa
+    </mat-card-title>
+
+  </mat-card-header>
+
+  <mat-card-content>
+    <img mat-card-image src="data:image/jpg;base64,{{ person.image }}" alt="">
+    <p>
+      <strong>{{person.name}}</strong>
+    </p>
+    <p>
+      <strong>{{person.email}}</strong>
+    </p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="close()">
+      Fechar
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -9,18 +9,24 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { PersonComponent } from './components/person/person.component';
 import { PersonService } from './services/person.service';
+import { PersonDetailComponent } from './components/person-detail/person-detail.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PersonComponent
+    PersonComponent,
+    PersonDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,11 @@ import { PersonService } from './services/person.service';
     ReactiveFormsModule,
     MatTabsModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatSnackBarModule
   ],
   providers: [
     PersonService
